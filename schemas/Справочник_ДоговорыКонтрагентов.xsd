@@ -1,0 +1,885 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:complexType name="Ссылка">
+    <xs:annotation>
+      <xs:documentation>Ссылка на объект: Тип = полное имя метаданных, Guid = GUID записи. Пустые Тип/Guid допускаются для отложенного разрешения.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Тип" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="Guid" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Выгрузка">
+    <xs:annotation>
+      <xs:documentation>Договоры контрагентов</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Запись" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ИмяПредопределенныхДанных" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="256" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Предопределенный" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:boolean" />
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Ссылка" type="Ссылка" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Идентификатор самой записи (тип + GUID)</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="ПометкаУдаления" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:boolean" />
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ЭтоГруппа" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:boolean" />
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Владелец" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Контрагент</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Ссылка" type="Ссылка" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Родитель" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Ссылка" type="Ссылка" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Наименование" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="150" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Код" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Автор" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Автор</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Ссылка" type="Ссылка" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="ДатаСоздания" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Дата создания</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:dateTime" />
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ВалютаВзаиморасчетов" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Валюта взаиморасчетов</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Ссылка" type="Ссылка" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="ДатаНачала" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Дата начала</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:date" />
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ДатаОкончания" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Срок завершения действия договора</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:date" />
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ДопустимоеЧислоДнейЗадолженности" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Допустимое число дней дебиторской задолженности</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:decimal">
+                    <xs:totalDigits value="10" />
+                    <xs:fractionDigits value="0" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ДопустимаяСуммаЗадолженности" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Допустимая сумма дебиторской задолженности</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:decimal">
+                    <xs:totalDigits value="15" />
+                    <xs:fractionDigits value="2" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ВидДоговора" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Вид договора</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Ссылка" type="Ссылка" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="ТипДоговора" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Тип договора</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Ссылка" type="Ссылка" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="КонтрагентСтр" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Контрагент (строкой)</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="150" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Комментарий" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Комментарий</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string" />
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ПроцентЗаТранзитПриПоступлении" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Процент за транзитные операции при поступлении денежных средств</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:decimal">
+                    <xs:totalDigits value="10" />
+                    <xs:fractionDigits value="3" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ПроцентЗаТранзитПриСписании" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Процент за транзитные операции при списании денежных средств</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:decimal">
+                    <xs:totalDigits value="10" />
+                    <xs:fractionDigits value="3" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="НомерДоговора" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Номер договора</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Организация" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Организация</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Ссылка" type="Ссылка" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Подразделение" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Подразделение</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Ссылка" type="Ссылка" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Проект" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Проект</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Ссылка" type="Ссылка" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Ответственный" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Ответственный</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Ссылка" type="Ссылка" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="КонтролироватьСуммуЗадолженности" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Контролировать сумму дебиторской задолженности</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:boolean" />
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="КонтролироватьЧислоДнейЗадолженности" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Контролировать число дней дебиторской задолженности</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:boolean" />
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ТипЦен" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Тип цен</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Ссылка" type="Ссылка" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="_Скидка" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Скидка</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Ссылка" type="Ссылка" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Скидка" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Скидка</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:decimal">
+                    <xs:totalDigits value="15" />
+                    <xs:fractionDigits value="2" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ДокументОснование" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Документ основания</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Ссылка" type="Ссылка" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="ФормироватьВходящуюУслугуПриСписанииДенежныхСредств" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Формировать входящую услугу при списании денежных средств</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:boolean" />
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="СпособРасчетаСуммыВходящейУслуги" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Способ расчета суммы входящей услуги</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:decimal">
+                    <xs:totalDigits value="10" />
+                    <xs:fractionDigits value="0" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ПроцентВходящейУслуги" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Процент входящей услуги</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:decimal">
+                    <xs:totalDigits value="5" />
+                    <xs:fractionDigits value="2" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="СуммаВходящейУслуги" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Сумма входящей услуги</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:decimal">
+                    <xs:totalDigits value="15" />
+                    <xs:fractionDigits value="2" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="УникальныйИдентификатор" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Уникальный идентификатор</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="36" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="СпособРасчетаПоДоговоруЗайма" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Способ расчета по договору займа</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Ссылка" type="Ссылка" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="СуммаДоговора" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Сумма договора</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:decimal">
+                    <xs:totalDigits value="15" />
+                    <xs:fractionDigits value="2" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ГрафикПлатежей" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>График платежей</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Ссылка" type="Ссылка" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Город" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Город</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Ссылка" type="Ссылка" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="РазмерПредоплаты" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Размер предоплаты</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:decimal">
+                    <xs:totalDigits value="3" />
+                    <xs:fractionDigits value="0" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ИдентификаторГосКонтракта" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Идентификатор гос. контракта</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="99" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ИспользоватьУПД" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Использовать УПД</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:boolean" />
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Отключен" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Отключен</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:date" />
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="УсловияПродления" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Условия продления</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="300" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="НестандартныйНомер" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Нестандартный номер</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:boolean" />
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ПлатятЗаДрЮЛ" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Платят за др ЮЛ</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:boolean" />
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ПечатныеФормыБезПроектов" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Печатные формы без проектов</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:boolean" />
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ЭтоДопсоглашение" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Это допсоглашение</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:boolean" />
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ОсновнойДоговор" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Основной договор</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Ссылка" type="Ссылка" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="ДействияПоДоговоруЗапрещены" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Действия по договору запрещены</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:boolean" />
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ТабличнаяЧасть_ПредметДоговора" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Предмет договора</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Строка" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Номенклатура" minOccurs="0">
+                            <xs:annotation>
+                              <xs:documentation>Номенклатура</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Ссылка" type="Ссылка" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="Количество" minOccurs="0">
+                            <xs:annotation>
+                              <xs:documentation>Количество</xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                              <xs:restriction base="xs:decimal">
+                                <xs:totalDigits value="10" />
+                                <xs:fractionDigits value="3" />
+                              </xs:restriction>
+                            </xs:simpleType>
+                          </xs:element>
+                          <xs:element name="Единица" minOccurs="0">
+                            <xs:annotation>
+                              <xs:documentation>Единица</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Ссылка" type="Ссылка" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="Коэффициент" minOccurs="0">
+                            <xs:annotation>
+                              <xs:documentation>Коэффициент</xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                              <xs:restriction base="xs:decimal">
+                                <xs:totalDigits value="10" />
+                                <xs:fractionDigits value="3" />
+                              </xs:restriction>
+                            </xs:simpleType>
+                          </xs:element>
+                          <xs:element name="УникальныйИдентификатор" minOccurs="0">
+                            <xs:annotation>
+                              <xs:documentation>Уникальный идентификатор</xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string">
+                                <xs:maxLength value="36" />
+                              </xs:restriction>
+                            </xs:simpleType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="НомерСтроки" type="xs:integer" />
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="ТабличнаяЧасть_СтороныДоговора" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Стороны договора</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Строка" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="НаименованиеСтороны" minOccurs="0">
+                            <xs:annotation>
+                              <xs:documentation>Наименование стороны</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Ссылка" type="Ссылка" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="КонтрагентОрганизация" minOccurs="0">
+                            <xs:annotation>
+                              <xs:documentation>Контрагент /  Организация</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Ссылка" type="Ссылка" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="Подписант" minOccurs="0">
+                            <xs:annotation>
+                              <xs:documentation>Подписант</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Ссылка" type="Ссылка" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="ДолжностьПодписанта" minOccurs="0">
+                            <xs:annotation>
+                              <xs:documentation>Должность подписанта</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Ссылка" type="Ссылка" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="ДействующегоНаОсновании" minOccurs="0">
+                            <xs:annotation>
+                              <xs:documentation>Действующего на основании</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Ссылка" type="Ссылка" />
+                                <xs:element name="Значение" type="xs:string" minOccurs="0">
+                                  <xs:annotation>
+                                    <xs:documentation>Примитивное значение составного типа (текстом)</xs:documentation>
+                                  </xs:annotation>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="УникальныйИдентификатор" minOccurs="0">
+                            <xs:annotation>
+                              <xs:documentation>Уникальный идентификатор</xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string">
+                                <xs:maxLength value="36" />
+                              </xs:restriction>
+                            </xs:simpleType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="НомерСтроки" type="xs:integer" />
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="ТабличнаяЧасть_СписокКонтрагентов" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Список контрагентов</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Строка" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Контрагент" minOccurs="0">
+                            <xs:annotation>
+                              <xs:documentation>Контрагент</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Ссылка" type="Ссылка" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="УникальныйИдентификатор" minOccurs="0">
+                            <xs:annotation>
+                              <xs:documentation>Уникальный идентификатор</xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string">
+                                <xs:maxLength value="36" />
+                              </xs:restriction>
+                            </xs:simpleType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="НомерСтроки" type="xs:integer" />
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="ТабличнаяЧасть_ПроцентыПоДоговоруЗайма" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Проценты по договору займа</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Строка" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Дата" minOccurs="0">
+                            <xs:annotation>
+                              <xs:documentation>Дата</xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                              <xs:restriction base="xs:date" />
+                            </xs:simpleType>
+                          </xs:element>
+                          <xs:element name="Процент" minOccurs="0">
+                            <xs:annotation>
+                              <xs:documentation>Процент</xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                              <xs:restriction base="xs:decimal">
+                                <xs:totalDigits value="10" />
+                                <xs:fractionDigits value="2" />
+                              </xs:restriction>
+                            </xs:simpleType>
+                          </xs:element>
+                          <xs:element name="УникальныйИдентификатор" minOccurs="0">
+                            <xs:annotation>
+                              <xs:documentation>Уникальный идентификатор</xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string">
+                                <xs:maxLength value="36" />
+                              </xs:restriction>
+                            </xs:simpleType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="НомерСтроки" type="xs:integer" />
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="ТабличнаяЧасть_Скидки" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Скидки</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Строка" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Номенклатура" minOccurs="0">
+                            <xs:annotation>
+                              <xs:documentation>Номенклатура</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Ссылка" type="Ссылка" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="Скидка" minOccurs="0">
+                            <xs:annotation>
+                              <xs:documentation>Скидка</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Ссылка" type="Ссылка" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="ДатаНач" minOccurs="0">
+                            <xs:annotation>
+                              <xs:documentation>С</xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                              <xs:restriction base="xs:date" />
+                            </xs:simpleType>
+                          </xs:element>
+                          <xs:element name="ДатаКон" minOccurs="0">
+                            <xs:annotation>
+                              <xs:documentation>По</xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                              <xs:restriction base="xs:date" />
+                            </xs:simpleType>
+                          </xs:element>
+                          <xs:element name="ТипЦены" minOccurs="0">
+                            <xs:annotation>
+                              <xs:documentation>Тип цены</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Ссылка" type="Ссылка" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="УникальныйИдентификатор" minOccurs="0">
+                            <xs:annotation>
+                              <xs:documentation>Уникальный идентификатор</xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string">
+                                <xs:maxLength value="36" />
+                              </xs:restriction>
+                            </xs:simpleType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="НомерСтроки" type="xs:integer" />
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="ТабличнаяЧасть_ДополнительныеРеквизиты" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Дополнительные реквизиты</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Строка" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Свойство" minOccurs="0">
+                            <xs:annotation>
+                              <xs:documentation>Свойство</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Ссылка" type="Ссылка" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="Значение" minOccurs="0">
+                            <xs:annotation>
+                              <xs:documentation>Значение</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Ссылка" type="Ссылка" />
+                                <xs:element name="Значение" type="xs:string" minOccurs="0">
+                                  <xs:annotation>
+                                    <xs:documentation>Примитивное значение составного типа (текстом)</xs:documentation>
+                                  </xs:annotation>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="ТекстоваяСтрока" minOccurs="0">
+                            <xs:annotation>
+                              <xs:documentation>Текстовая строка</xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string" />
+                            </xs:simpleType>
+                          </xs:element>
+                          <xs:element name="УникальныйИдентификатор" minOccurs="0">
+                            <xs:annotation>
+                              <xs:documentation>Уникальный идентификатор</xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string">
+                                <xs:maxLength value="36" />
+                              </xs:restriction>
+                            </xs:simpleType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="НомерСтроки" type="xs:integer" />
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="Конфигурация" type="xs:string" />
+      <xs:attribute name="ВерсияКонфигурации" type="xs:string" />
+      <xs:attribute name="Объект" type="xs:string" />
+      <xs:attribute name="ВерсияФормата" type="xs:string" />
+      <xs:attribute name="ДатаВыгрузки" type="xs:string" />
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
